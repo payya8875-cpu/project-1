@@ -1,0 +1,1518 @@
+<!doctype html>
+<html lang="th">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บทเรียนออนไลน์โครงสร้างภาษาซี</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      background: linear-gradient(135deg, #a8e6cf 0%, #dcedc8 50%, #c8e6c9 100%);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .clouds {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cloud {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 100px;
+      animation: float 60s infinite ease-in-out;
+    }
+
+    .cloud::before,
+    .cloud::after {
+      content: '';
+      position: absolute;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 100px;
+    }
+
+    .cloud1 {
+      width: 120px;
+      height: 40px;
+      top: 10%;
+      left: -150px;
+      animation-delay: 0s;
+    }
+
+    .cloud1::before {
+      width: 50px;
+      height: 50px;
+      top: -25px;
+      left: 20px;
+    }
+
+    .cloud1::after {
+      width: 60px;
+      height: 40px;
+      top: -20px;
+      right: 20px;
+    }
+
+    .cloud2 {
+      width: 150px;
+      height: 50px;
+      top: 25%;
+      left: -200px;
+      animation-delay: 15s;
+    }
+
+    .cloud2::before {
+      width: 60px;
+      height: 60px;
+      top: -30px;
+      left: 30px;
+    }
+
+    .cloud2::after {
+      width: 70px;
+      height: 50px;
+      top: -25px;
+      right: 25px;
+    }
+
+    .cloud3 {
+      width: 100px;
+      height: 35px;
+      top: 50%;
+      left: -120px;
+      animation-delay: 30s;
+    }
+
+    .cloud3::before {
+      width: 45px;
+      height: 45px;
+      top: -20px;
+      left: 15px;
+    }
+
+    .cloud3::after {
+      width: 50px;
+      height: 35px;
+      top: -15px;
+      right: 15px;
+    }
+
+    .cloud4 {
+      width: 130px;
+      height: 45px;
+      top: 70%;
+      left: -160px;
+      animation-delay: 45s;
+    }
+
+    .cloud4::before {
+      width: 55px;
+      height: 55px;
+      top: -28px;
+      left: 25px;
+    }
+
+    .cloud4::after {
+      width: 65px;
+      height: 45px;
+      top: -23px;
+      right: 20px;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(calc(100vw + 200px));
+      }
+    }
+
+    .app-wrapper {
+      width: 100%;
+      min-height: 100%;
+      position: relative;
+      z-index: 1;
+      padding: 40px 20px;
+    }
+
+    .page-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .shine-effect::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 50px;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+      transform: skewX(-20deg);
+      animation: shine 10s infinite;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -50%;
+      }
+      10% {
+        left: 150%;
+      }
+      100% {
+        left: 150%;
+      }
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      color: #2e7d32;
+      font-size: 2em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      color: #558b2f;
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #2e7d32;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #81c784;
+      border-radius: 15px;
+      font-size: 1em;
+      font-family: 'Noto Sans Thai', sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #4caf50;
+      box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 15px;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Noto Sans Thai', sans-serif;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
+      color: white;
+      margin-top: 15px;
+    }
+
+    .nav-menu {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .nav-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 18px;
+      padding: 25px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-card.pretest {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 152, 0, 0.3));
+    }
+
+    .nav-card.content {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.3), rgba(3, 169, 244, 0.3));
+    }
+
+    .nav-card.posttest {
+      background: linear-gradient(135deg, rgba(156, 39, 176, 0.3), rgba(123, 31, 162, 0.3));
+    }
+
+    .nav-card.game {
+      background: linear-gradient(135deg, rgba(233, 30, 99, 0.3), rgba(216, 27, 96, 0.3));
+    }
+
+    .nav-card.results {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.3), rgba(56, 142, 60, 0.3));
+    }
+
+    .nav-card .icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    .nav-card h3 {
+      color: #1b5e20;
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
+    .nav-card.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .quiz-container {
+      text-align: center;
+    }
+
+    .timer {
+      background: linear-gradient(135deg, #ff5252 0%, #f44336 100%);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 15px;
+      font-size: 1.5em;
+      font-weight: 700;
+      margin-bottom: 25px;
+      display: inline-block;
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+    }
+
+    .question {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .question h3 {
+      color: #1b5e20;
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .choice {
+      background: white;
+      padding: 15px 20px;
+      border: 2px solid #81c784;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1em;
+      text-align: left;
+    }
+
+    .choice:hover {
+      background: #e8f5e9;
+      border-color: #4caf50;
+      transform: translateX(5px);
+    }
+
+    .choice.selected {
+      background: #4caf50;
+      color: white;
+      border-color: #2e7d32;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 25px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      flex: 1;
+      min-width: 150px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px solid #81c784;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      color: #2e7d32;
+    }
+
+    .tab:hover {
+      background: #e8f5e9;
+      transform: translateY(-2px);
+    }
+
+    .tab.active {
+      background: #4caf50;
+      color: white;
+      border-color: #2e7d32;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .content-box {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .content-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 50px;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: skewX(-20deg);
+      animation: shine 10s infinite;
+    }
+
+    .content-box .icon {
+      font-size: 4em;
+      margin-bottom: 20px;
+    }
+
+    .content-box h3 {
+      color: #1b5e20;
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .content-box p {
+      color: #424242;
+      font-size: 1em;
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .content-box ul {
+      text-align: left;
+      margin-left: 20px;
+      color: #424242;
+      line-height: 1.8;
+    }
+
+    .content-box code {
+      background: #e0f2f1;
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      color: #00695c;
+    }
+
+    .game-area {
+      text-align: center;
+    }
+
+    .game-question {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .game-question h3 {
+      color: #1b5e20;
+      font-size: 1.4em;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .drag-items {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    .drag-item {
+      background: linear-gradient(135deg, #ffeb3b 0%, #fdd835 100%);
+      padding: 15px 25px;
+      border-radius: 12px;
+      cursor: move;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .drag-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .drop-zones {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .drop-zone {
+      background: rgba(255, 255, 255, 0.9);
+      border: 3px dashed #81c784;
+      padding: 20px 30px;
+      border-radius: 12px;
+      min-width: 150px;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #757575;
+      transition: all 0.3s ease;
+    }
+
+    .drop-zone.drag-over {
+      background: #e8f5e9;
+      border-color: #4caf50;
+      transform: scale(1.05);
+    }
+
+    .drop-zone.filled {
+      background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+      color: white;
+      border-style: solid;
+    }
+
+    .results-container {
+      text-align: center;
+    }
+
+    .score-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .score-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 50px;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transform: skewX(-20deg);
+      animation: shine 10s infinite;
+    }
+
+    .score-card .icon {
+      font-size: 3em;
+      margin-bottom: 15px;
+    }
+
+    .score-card h3 {
+      color: #1b5e20;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .score-card .score {
+      font-size: 2.5em;
+      font-weight: 700;
+      color: #4caf50;
+    }
+
+    .comparison {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 18px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 25px;
+    }
+
+    .comparison h3 {
+      color: #1b5e20;
+      font-size: 1.4em;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .improvement {
+      font-size: 1.8em;
+      font-weight: 700;
+      margin: 20px 0;
+    }
+
+    .improvement.positive {
+      color: #4caf50;
+    }
+
+    .improvement.negative {
+      color: #f44336;
+    }
+
+    .improvement.neutral {
+      color: #ff9800;
+    }
+
+    .quality-badge {
+      display: inline-block;
+      padding: 15px 30px;
+      border-radius: 25px;
+      font-size: 1.3em;
+      font-weight: 700;
+      margin-top: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .quality-badge.excellent {
+      background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%);
+      color: white;
+    }
+
+    .quality-badge.good {
+      background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+      color: white;
+    }
+
+    .quality-badge.fair {
+      background: linear-gradient(135deg, #ffeb3b 0%, #fdd835 100%);
+      color: #795548;
+    }
+
+    .quality-badge.poor {
+      background: linear-gradient(135deg, #ff7043 0%, #f4511e 100%);
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .app-wrapper {
+        padding: 20px 15px;
+      }
+
+      .glass-card {
+        padding: 25px;
+      }
+
+      .header h1 {
+        font-size: 1.5em;
+      }
+
+      .header p {
+        font-size: 0.95em;
+      }
+
+      .nav-menu {
+        grid-template-columns: 1fr;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab {
+        min-width: 100%;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="clouds">
+   <div class="cloud cloud1"></div>
+   <div class="cloud cloud2"></div>
+   <div class="cloud cloud3"></div>
+   <div class="cloud cloud4"></div>
+  </div>
+  <div class="app-wrapper">
+   <div class="page-container"><!-- Login Page -->
+    <div id="loginPage" class="glass-card shine-effect">
+     <div class="header">
+      <p style="font-size: 1em; color: #2e7d32; font-weight: 600; margin-bottom: 15px;">👨‍🏫 ครูอธิเจตน์ Online</p>
+      <h1>📚 บทเรียนออนไลน์</h1>
+      <p><strong>โครงสร้างภาษาซีเบื้องต้น</strong></p>
+      <p>ระดับชั้น: ปวช.1</p>
+      <p>วิชา: พื้นฐานการเขียนโปรแกรมคอมพิวเตอร์</p>
+     </div>
+     <div class="form-group"><label for="studentName">👤 กรุณากรอกชื่อ-นามสกุล:</label> <input type="text" id="studentName" placeholder="ชื่อ นามสกุล">
+     </div><button class="btn btn-primary" id="loginBtn">เข้าสู่ระบบ</button>
+    </div><!-- Main Menu -->
+    <div id="menuPage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <p style="font-size: 1em; color: #2e7d32; font-weight: 600; margin-bottom: 15px;">👨‍🏫 ครูอธิเจตน์ Online</p>
+      <h1>📚 โครงสร้างภาษาซีเบื้องต้น</h1>
+      <p>ระดับชั้น: ปวช.1 | วิชา: พื้นฐานการเขียนโปรแกรมคอมพิวเตอร์</p>
+      <p style="margin-top: 10px; font-size: 1.1em;">👋 สวัสดี <span id="studentNameDisplay"></span></p>
+     </div>
+     <div class="nav-menu">
+      <div class="nav-card pretest" id="pretestCard">
+       <div class="icon">
+        📝
+       </div>
+       <h3>แบบทดสอบก่อนเรียน</h3>
+      </div>
+      <div class="nav-card content disabled" id="contentCard">
+       <div class="icon">
+        📖
+       </div>
+       <h3>เนื้อหาความรู้</h3>
+      </div>
+      <div class="nav-card posttest disabled" id="posttestCard">
+       <div class="icon">
+        ✍️
+       </div>
+       <h3>แบบทดสอบหลังเรียน</h3>
+      </div>
+      <div class="nav-card game disabled" id="gameCard">
+       <div class="icon">
+        🎮
+       </div>
+       <h3>เกมโต้ตอบ</h3>
+      </div>
+      <div class="nav-card results disabled" id="resultsCard">
+       <div class="icon">
+        📊
+       </div>
+       <h3>ตรวจสอบคะแนน</h3>
+      </div>
+     </div><button class="btn btn-secondary" id="logoutBtn">🚪 ออกจากระบบ</button>
+    </div><!-- Pretest Page -->
+    <div id="pretestPage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <h1>📝 แบบทดสอบก่อนเรียน</h1>
+     </div>
+     <div class="quiz-container">
+      <div class="timer" id="pretestTimer">
+       ⏰ 20
+      </div>
+      <div class="question" id="pretestQuestion"></div><button class="btn btn-primary" id="pretestNextBtn">ถัดไป</button> <button class="btn btn-secondary" id="pretestBackBtn">กลับเมนู</button>
+     </div>
+    </div><!-- Content Page -->
+    <div id="contentPage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <h1>📖 เนื้อหาความรู้</h1>
+     </div>
+     <div class="tabs">
+      <div class="tab active" data-tab="tab1">
+       โครงสร้างของภาษาซี
+      </div>
+      <div class="tab" data-tab="tab2">
+       ความหมายของตัวแปร
+      </div>
+      <div class="tab" data-tab="tab3">
+       ฟังก์ชั่นการรับส่งข้อมูล
+      </div>
+      <div class="tab" data-tab="tab4">
+       การเขียนโปรแกรมอย่างง่าย
+      </div>
+     </div>
+     <div class="tab-content active" id="tab1">
+      <div class="content-box">
+       <div class="icon">
+        💻
+       </div>
+       <h3>โครงสร้างของภาษาซี</h3>
+       <p>ภาษาซีเป็นภาษาโปรแกรมมิ่งที่มีโครงสร้างชัดเจน ประกอบด้วย:</p>
+       <ul>
+        <li><strong>ส่วนหัวของโปรแกรม (Header)</strong> - ประกาศไลบรารีที่   ช้ เช่น <code>#include &lt;stdio.h&gt;</code></li>
+        <li><strong>ฟังก์ชัน main()</strong> - จุดเริ่มต้นการทำงานของโปรแกรม</li>
+        <li><strong>การประกาศตัวแปร (Variable Declaration)</strong> - กำหนดชนิดและชื่อตัวแปร</li>
+        <li><strong>คำสั่ง (Statement)</strong> - คำสั่งต่างๆ ที่ต้องการให้โปรแกรมทำงาน</li>
+        <li><strong>ปีกกา { }</strong> - ใช้จัดกลุ่มคำสั่งภายในฟังก์ชัน</li>
+       </ul>
+       <p style="margin-top: 15px;">โครงสร้างพื้นฐานของโปรแกรมภาษาซี:</p>
+       <p><code>#include &lt;stdio.h&gt;<br>
+         int main() {<br>
+         &nbsp;&nbsp;// คำสั่งต่างๆ<br>
+         &nbsp;&nbsp;return 0;<br>
+         }</code></p>
+      </div>
+     </div>
+     <div class="tab-content" id="tab2">
+      <div class="content-box">
+       <div class="icon">
+        📦
+       </div>
+       <h3>ความหมายของตัวแปร</h3>
+       <p>ตัวแปร (Variable) คือพื้นที่ในหน่วยความจำที่ใช้เก็บข้อมูล ซึ่งสามารถเปลี่ยนแปลงค่าได้ตลอดการทำงานของโปรแกรม</p>
+       <p style="margin-top: 15px;"><strong>ชนิดของตัวแปรที่นิยมใช้:</strong></p>
+       <ul>
+        <li><code>int</code> - เก็บเลขจำนวนเต็ม เช่น 1, 2, 100</li>
+        <li><code>float</code> - เก็บเลขทศนิยม เช่น 3.14, 2.5</li>
+        <li><code>char</code> - เก็   ตัวอักษร 1 ตัว เช่น 'A', 'b'</li>
+        <li><code>double</code> - เก็บเลขทศนิยมความแม่น  ำสูง</li>
+       </ul>
+       <p style="margin-top: 15px;">ตัวอย่างการประกาศตัวแปร:</p>
+       <p><code>int age = 18;<br>
+         float score = 85.5;<br>
+         char grade = 'A';</code></p>
+      </div>
+     </div>
+     <div class="tab-content" id="tab3">
+      <div class="content-box">
+       <div class="icon">
+        🔄
+       </div>
+       <h3>ฟังก์ชั่นการรับส่งข้อมูลเบื้องต้น</h3>
+       <p>การรับและส่งข้อมูลเป็นพื้นฐานสำคัญในการเขียนโปรแกรม</p>
+       <p style="margin-top: 15px;"><strong>ฟังก์ชันสำคัญ:</strong></p>
+       <ul>
+        <li><code>printf()</code> - ใช้แสดงผลข้อมูลออกทางหน้าจอ<br>
+          ตัวอย่าง: <code>printf("Hello World");</code></li>
+        <li><code>scanf()</code> - ใช้รับข้อมูลจากผู้ใช้<br>
+          ตัวอย่าง: <code>scanf("%d", &amp;number);</code></li>
+        <li><code>%d</code> - รูปแบบสำหรับข้อมูลจำนวนเต็ม</li>
+        <li><code>%f</code> - รูปแบบสำหรับข้อมูลทศนิยม</li>
+        <li><code>%c</code> - รูปแบบสำหรับตัวอักษร</li>
+       </ul>
+       <p style="margin-top: 15px;">เครื่องหมาย <code>&amp;</code> (แอมเพอร์แซนด์) ใช้เมื่อรับค่าด้วย scanf() เพื่อบอกตำแหน่งหน่วยความจำของตัวแปร</p>
+      </div>
+     </div>
+     <div class="tab-content" id="tab4">
+      <div class="content-box">
+       <div class="icon">
+        ✨
+       </div>
+       <h3>การเขียนโปรแกรมอย่างง่าย</h3>
+       <p>มาลองเขียนโปรแกรมง่ายๆ กันเถอะ! นี่คือตัวอย่างโปรแกรมรับค่าและแสดงผล:</p>
+       <p style="margin-top: 15px;"><strong>โปรแกรมบวกเลข 2 จำนวน:</strong></p>
+       <p><code>#include &lt;stdio.h&gt;<br>
+          int main() {<br>
+          &nbsp;&nbsp;int a, b, sum;<br>
+          &nbsp;&nbsp;printf("ใส่ตัวเลขที่ 1: ");<br>
+          &nbsp;&nbsp;scanf("%d", &amp;a);<br>
+          &nbsp;&nbsp;printf("ใส่ตัวเลขที่ 2: ");<br>
+          &nbsp;&nbsp;scanf("%d", &amp;b);<br>
+          &nbsp;&nbsp;sum = a + b;<br>
+          &nbsp;&nbsp;printf("ผลรวม = %d", sum);<br>
+          &nbsp;&nbsp;return 0;<br>
+          }</code></p>
+       <p style="margin-top: 15px;"><strong>ขั้นตอนการเขียนโปรแกรม:</strong></p>
+       <ul>
+        <li>1. วิ   คราะห์โจทย์ - เข้าใจสิ่งที่ต้องการ</li>
+        <li>2. ออกแบบขั้นตอน - วางแผนการทำงาน</li>
+        <li>3. เขียนโค้ด - แปลงขั้นตอนเป็นคำสั่ง</li>
+        <li>4. ทดสอบโปรแกรม - ตรวจสอบความถูกต้อง</li>
+        <li>5. แก้ไขข้อผิดพลาด - ปรับปรุงให้สมบูรณ์</li>
+       </ul>
+      </div>
+     </div><button class="btn btn-secondary" id="contentBackBtn">กลับเมนู</button>
+    </div><!-- Posttest Page -->
+    <div id="posttestPage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <h1>✍️ แบบทดสอบหลังเรียน</h1>
+     </div>
+     <div class="quiz-container">
+      <div class="timer" id="posttestTimer">
+       ⏰ 20
+      </div>
+      <div class="question" id="posttestQuestion"></div><button class="btn btn-primary" id="posttestNextBtn">ถัดไป</button> <button class="btn btn-secondary" id="posttestBackBtn">กลับเมนู</button>
+     </div>
+    </div><!-- Game Page -->
+    <div id="gamePage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <h1>🎮 เกมโต้ตอบ: จับคู่คำศัพท์</h1>
+      <p>ลากคำศัพท์ไปวางในช่องที่ตรงกับความหมาย</p>
+     </div>
+     <div class="game-area">
+      <div class="game-question">
+       <h3>คะแนน: <span id="gameScore">0</span> / 5</h3>
+       <div class="drag-items" id="dragItems"></div>
+       <div class="drop-zones" id="dropZones"></div>
+      </div><button class="btn btn-primary" id="gameResetBtn">เริ่มเกมใหม่</button> <button class="btn btn-secondary" id="gameBackBtn">กลับเมนู</button>
+     </div>
+    </div><!-- Results Page -->
+    <div id="resultsPage" class="glass-card shine-effect hidden">
+     <div class="header">
+      <h1>📊 ผลคะแนนและการพัฒนา</h1>
+     </div>
+     <div class="results-container">
+      <div class="score-cards">
+       <div class="score-card">
+        <div class="icon">
+         📝
+        </div>
+        <h3>คะแนนก่อนเรียน</h3>
+        <div class="score" id="pretestScore">
+         -
+        </div>
+       </div>
+       <div class="score-card">
+        <div class="icon">
+         ✍️
+        </div>
+        <h3>คะแนนหลังเรียน</h3>
+        <div class="score" id="posttestScore">
+         -
+        </div>
+       </div>
+      </div>
+      <div class="comparison">
+       <h3>📈 การพัฒนาของคุณ</h3>
+       <div class="improvement" id="improvement">
+        -
+       </div>
+       <div id="qualityBadge"></div>
+      </div><button class="btn btn-secondary" id="resultsBackBtn">กลับเมนู</button>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      teacher_name: 'ครูอธิเจตน์ Online',
+      lesson_title: 'โครงสร้างภาษาซีเบื้องต้น',
+      grade_level: 'ปวช.1',
+      subject_name: 'พื้นฐานการเขียนโปรแกรมคอมพิวเตอร์',
+      tab1_title: 'โครงสร้างของภาษาซี',
+      tab2_title: 'ความหมายของตัวแปร',
+      tab3_title: 'ฟังก์ชั่นการรับส่งข้อมูลเบื้องต้น',
+      tab4_title: 'การเขียนโปรแกรมอย่างง่าย'
+    };
+
+    const quizData = [
+      {
+        question: 'ข้อใดคือจุดเริ่มต้นการทำงานของโปรแกรมภาษาซี',
+        choices: ['int main()', 'void start()', 'begin program', 'start()'],
+        correct: 0
+      },
+      {
+        question: 'คำสั่งใดใช้สำหรับแสดงผลออกทางหน้าจอ',
+        choices: ['print()', 'display()', 'printf()', 'show()'],
+        correct: 2
+      },
+      {
+        question: 'ตัวแปรชนิด int ใช้เก็บข้อมูลประเภทใด',
+        choices: ['ตัวอักษร', 'เลขจำนวนเต็ม', 'เลขทศนิยม', 'ข้อความ'],
+        correct: 1
+      },
+      {
+        question: 'เครื่องหมาย & ใน scanf() ใช้เพื่ออะไร',
+        choices: ['คำนวณค่า', 'บอกตำแหน่งหน่วยความจำ', 'แสดงผล', 'รับค่า'],
+        correct: 1
+      },
+      {
+        question: 'ข้อใดคือการประกาศตัวแปรที่ถูกต้อง',
+        choices: ['int 123abc;', 'float score;', 'char number;', 'variable x;'],
+        correct: 1
+      },
+      {
+        question: '%d ใช้แทนข้อมูลชนิดใด',
+        choices: ['ตัวอักษร', 'จำนวนเต็ม', 'ทศนิยม', 'ข้อความ'],
+        correct: 1
+      },
+      {
+        question: '#include <stdio.h> คืออะไร',
+        choices: ['คำสั่ง', 'ตัวแปร', 'การประกาศไลบรารี', 'ฟังก์ชัน'],
+        correct: 2
+      },
+      {
+        question: 'ปีกกา { } ใช้เพื่ออะไร',
+        choices: ['แสดงผล', 'จัดกลุ่มคำสั่ง', 'รับค่า', 'ประกาศตัวแปร'],
+        correct: 1
+      },
+      {
+        question: 'return 0; ในฟังก์ชัน main() หมายถึงอะไร',
+        choices: ['เริ่มโปรแกรม', 'หยุดชั่วคราว', 'จบโปรแกรมปกติ', 'เกิดข้อ   ิด   ลาด'],
+        correct: 2
+      },
+      {
+        question: 'ตัวแปรชนิด char เก็บข้อมูลได้กี่ต  วอักษร',
+        choices: ['1 ตัว', '2 ตัว', '10 ตัว', 'ไม่จำกัด'],
+        correct: 0
+      }
+    ];
+
+    const gameData = [
+      { term: 'printf()', meaning: 'แสดงผลออกหน้าจอ' },
+      { term: 'scanf()', meaning: 'รับข้อมูลจากผู้ใช้' },
+      { term: 'int', meaning: 'เลขจำนวนเต็ม' },
+      { term: 'float', meaning: 'เลขทศนิยม' },
+      { term: 'main()', meaning: 'จุดเริ่มต้นโปรแกรม' }
+    ];
+
+    let currentPage = 'login';
+    let currentQuizIndex = 0;
+    let currentQuizType = '';
+    let timer;
+    let timeLeft = 20;
+    let pretestAnswers = [];
+    let posttestAnswers = [];
+    let gameMatches = 0;
+
+    function showPage(pageName) {
+      const pages = ['loginPage', 'menuPage', 'pretestPage', 'contentPage', 'posttestPage', 'gamePage', 'resultsPage'];
+      pages.forEach(page => {
+        document.getElementById(page).classList.add('hidden');
+      });
+      document.getElementById(pageName).classList.remove('hidden');
+      currentPage = pageName;
+    }
+
+    function updateMenuAccess() {
+      const pretestDone = localStorage.getItem('pretestDone') === 'true';
+      const contentCard = document.getElementById('contentCard');
+      const posttestCard = document.getElementById('posttestCard');
+      const gameCard = document.getElementById('gameCard');
+      const resultsCard = document.getElementById('resultsCard');
+
+      if (pretestDone) {
+        contentCard.classList.remove('disabled');
+        posttestCard.classList.remove('disabled');
+        gameCard.classList.remove('disabled');
+        resultsCard.classList.remove('disabled');
+      }
+    }
+
+    function shuffleArray(array) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    }
+
+    function startQuiz(type) {
+      currentQuizType = type;
+      currentQuizIndex = 0;
+      if (type === 'pretest') {
+        pretestAnswers = new Array(quizData.length).fill(-1);
+      } else {
+        posttestAnswers = new Array(quizData.length).fill(-1);
+      }
+      showQuizQuestion();
+    }
+
+    function showQuizQuestion() {
+      const questionContainer = document.getElementById(currentQuizType + 'Question');
+      const question = quizData[currentQuizIndex];
+      
+      timeLeft = 20;
+      clearInterval(timer);
+      updateTimer();
+      timer = setInterval(() => {
+        timeLeft--;
+        updateTimer();
+        if (timeLeft <= 0) {
+          nextQuestion();
+        }
+      }, 1000);
+
+      let shuffledChoices = question.choices;
+      let correctIndex = question.correct;
+
+      if (currentQuizType === 'posttest') {
+        const indices = [0, 1, 2, 3];
+        const shuffledIndices = shuffleArray(indices);
+        shuffledChoices = shuffledIndices.map(i => question.choices[i]);
+        correctIndex = shuffledIndices.indexOf(question.correct);
+      }
+
+      let html = `
+        <h3>ข้อที่ ${currentQuizIndex + 1} / ${quizData.length}</h3>
+        <p style="font-size: 1.1em; margin: 20px 0; color: #424242;">${question.question}</p>
+        <div class="choices">
+      `;
+
+      shuffledChoices.forEach((choice, index) => {
+        const isSelected = (currentQuizType === 'pretest' ? pretestAnswers : posttestAnswers)[currentQuizIndex] === index;
+        html += `<div class="choice ${isSelected ? 'selected' : ''}" data-index="${index}">${index + 1}. ${choice}</div>`;
+      });
+
+      html += '</div>';
+      questionContainer.innerHTML = html;
+
+      document.querySelectorAll('.choice').forEach(choice => {
+        choice.addEventListener('click', function() {
+          const answers = currentQuizType === 'pretest' ? pretestAnswers : posttestAnswers;
+          answers[currentQuizIndex] = parseInt(this.dataset.index);
+          
+          document.querySelectorAll('.choice').forEach(c => c.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+      });
+
+      if (currentQuizType === 'posttest') {
+        quizData[currentQuizIndex].shuffledCorrect = correctIndex;
+      }
+    }
+
+    function updateTimer() {
+      const timerElement = document.getElementById(currentQuizType + 'Timer');
+      timerElement.textContent = `⏰ ${timeLeft}`;
+      if (timeLeft <= 5) {
+        timerElement.style.background = 'linear-gradient(135deg, #ff1744 0%, #d50000 100%)';
+      } else {
+        timerElement.style.background = 'linear-gradient(135deg, #ff5252 0%, #f44336 100%)';
+      }
+    }
+
+    function nextQuestion() {
+      clearInterval(timer);
+      currentQuizIndex++;
+      if (currentQuizIndex < quizData.length) {
+        showQuizQuestion();
+      } else {
+        finishQuiz();
+      }
+    }
+
+    function finishQuiz() {
+      clearInterval(timer);
+      let score = 0;
+      const answers = currentQuizType === 'pretest' ? pretestAnswers : posttestAnswers;
+      
+      quizData.forEach((question, index) => {
+        const correctAnswer = currentQuizType === 'posttest' && question.shuffledCorrect !== undefined 
+          ? question.shuffledCorrect 
+          : question.correct;
+        if (answers[index] === correctAnswer) {
+          score++;
+        }
+      });
+
+      localStorage.setItem(currentQuizType + 'Score', score);
+      if (currentQuizType === 'pretest') {
+        localStorage.setItem('pretestDone', 'true');
+        updateMenuAccess();
+      }
+
+      showPage('menuPage');
+    }
+
+    function initTabs() {
+      const tabs = document.querySelectorAll('.tab');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          tabs.forEach(t => t.classList.remove('active'));
+          tabContents.forEach(tc => tc.classList.remove('active'));
+
+          this.classList.add('active');
+          const targetTab = this.dataset.tab;
+          document.getElementById(targetTab).classList.add('active');
+        });
+      });
+    }
+
+    function initGame() {
+      const dragItems = document.getElementById('dragItems');
+      const dropZones = document.getElementById('dropZones');
+      gameMatches = 0;
+      document.getElementById('gameScore').textContent = gameMatches;
+
+      const shuffledTerms = shuffleArray([...gameData]);
+      const shuffledMeanings = shuffleArray([...gameData]);
+
+      dragItems.innerHTML = '';
+      shuffledTerms.forEach((item, index) => {
+        const dragItem = document.createElement('div');
+        dragItem.className = 'drag-item';
+        dragItem.draggable = true;
+        dragItem.textContent = item.term;
+        dragItem.dataset.term = item.term;
+        dragItem.addEventListener('dragstart', handleDragStart);
+        dragItems.appendChild(dragItem);
+      });
+
+      dropZones.innerHTML = '';
+      shuffledMeanings.forEach((item, index) => {
+        const dropZone = document.createElement('div');
+        dropZone.className = 'drop-zone';
+        dropZone.textContent = item.meaning;
+        dropZone.dataset.meaning = item.meaning;
+        dropZone.dataset.term = item.term;
+        dropZone.addEventListener('dragover', handleDragOver);
+        dropZone.addEventListener('drop', handleDrop);
+        dropZone.addEventListener('dragleave', handleDragLeave);
+        dropZones.appendChild(dropZone);
+      });
+    }
+
+    function handleDragStart(e) {
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', e.target.dataset.term);
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      e.dataTransfer.dropEffect = 'move';
+      if (!e.currentTarget.classList.contains('filled')) {
+        e.currentTarget.classList.add('drag-over');
+      }
+      return false;
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove('drag-over');
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) {
+        e.stopPropagation();
+      }
+      e.currentTarget.classList.remove('drag-over');
+
+      if (e.currentTarget.classList.contains('filled')) {
+        return false;
+      }
+
+      const draggedTerm = e.dataTransfer.getData('text/plain');
+      const dropZoneTerm = e.currentTarget.dataset.term;
+
+      if (draggedTerm === dropZoneTerm) {
+        e.currentTarget.classList.add('filled');
+        e.currentTarget.textContent = draggedTerm + ' ✓';
+        gameMatches++;
+        document.getElementById('gameScore').textContent = gameMatches;
+
+        const draggedElement = document.querySelector(`.drag-item[data-term="${draggedTerm}"]`);
+        if (draggedElement) {
+          draggedElement.style.display = 'none';
+        }
+
+        if (gameMatches === gameData.length) {
+          setTimeout(() => {
+            const resultMessage = document.createElement('div');
+            resultMessage.style.cssText = 'background: linear-gradient(135deg, #66bb6a 0%, #4caf50 100%); color: white; padding: 20px; border-radius: 15px; margin-top: 20px; font-size: 1.3em; font-weight: 600; text-align: center;';
+            resultMessage.textContent = '🎉 ยินดีด้วย! คุณจับคู่ถูกทั้งหมด!';
+            document.querySelector('.game-area').insertBefore(resultMessage, document.getElementById('gameResetBtn'));
+          }, 300);
+        }
+      }
+
+      return false;
+    }
+
+    function showResults() {
+      const pretestScore = parseInt(localStorage.getItem('pretestScore') || '0');
+      const posttestScore = parseInt(localStorage.getItem('posttestScore') || '0');
+
+      document.getElementById('pretestScore').textContent = pretestScore + ' / 10';
+      document.getElementById('posttestScore').textContent = posttestScore + ' / 10';
+
+      const improvement = posttestScore - pretestScore;
+      const improvementElement = document.getElementById('improvement');
+      
+      if (improvement > 0) {
+        improvementElement.textContent = `เพิ่มขึ้น +${improvement} คะแนน 📈`;
+        improvementElement.className = 'improvement positive';
+      } else if (improvement < 0) {
+        improvementElement.textContent = `ลดลง ${improvement} คะแนน 📉`;
+        improvementElement.className = 'improvement negative';
+      } else {
+        improvementElement.textContent = 'คะแนนเท่าเดิม ➡️';
+        improvementElement.className = 'improvement neutral';
+      }
+
+      const qualityBadge = document.getElementById('qualityBadge');
+      let badgeClass = '';
+      let badgeText = '';
+      
+      if (posttestScore >= 8) {
+        badgeClass = 'excellent';
+        badgeText = '🌟 ระดับคุณภาพ: ดีเยี่ยม';
+      } else if (posttestScore >= 6) {
+        badgeClass = 'good';
+        badgeText = '👍 ระดับคุณภาพ: ดี';
+      } else if (posttestScore >= 4) {
+        badgeClass = 'fair';
+        badgeText = '📚 ระดับคุณภาพ:   อใช้';
+      } else {
+        badgeClass = 'poor';
+        badgeText = '💪 ระดับคุณภาพ: ควรพัฒนา';
+      }
+
+      qualityBadge.innerHTML = `<div class="quality-badge ${badgeClass}">${badgeText}</div>`;
+    }
+
+    async function onConfigChange(config) {
+      const teacherName = config.teacher_name || defaultConfig.teacher_name;
+      const lessonTitle = config.lesson_title || defaultConfig.lesson_title;
+      const gradeLevel = config.grade_level || defaultConfig.grade_level;
+      const subjectName = config.subject_name || defaultConfig.subject_name;
+      const tab1Title = config.tab1_title || defaultConfig.tab1_title;
+      const tab2Title = config.tab2_title || defaultConfig.tab2_title;
+      const tab3Title = config.tab3_title || defaultConfig.tab3_title;
+      const tab4Title = config.tab4_title || defaultConfig.tab4_title;
+
+      const loginTeacherElement = document.querySelector('#loginPage .header p:first-child');
+      if (loginTeacherElement) {
+        loginTeacherElement.textContent = `👨‍🏫 ${teacherName}`;
+      }
+
+      const loginHeaderElements = document.querySelectorAll('#loginPage .header p');
+      if (loginHeaderElements.length >= 4) {
+        loginHeaderElements[1].innerHTML = `<strong>${lessonTitle}</strong>`;
+        loginHeaderElements[2].textContent = `ระดับชั้น: ${gradeLevel}`;
+        loginHeaderElements[3].textContent = `วิชา: ${subjectName}`;
+      }
+
+      const menuTeacherElement = document.querySelector('#menuPage .header p:first-child');
+      if (menuTeacherElement) {
+        menuTeacherElement.textContent = `👨‍🏫 ${teacherName}`;
+      }
+
+      const menuHeaderElements = document.querySelectorAll('#menuPage .header h1, #menuPage .header p');
+      if (menuHeaderElements.length >= 3) {
+        menuHeaderElements[1].textContent = `📚 ${lessonTitle}`;
+        menuHeaderElements[2].textContent = `ระดับชั้น: ${gradeLevel} | วิชา: ${subjectName}`;
+      }
+
+      const contentHeaderElements = document.querySelectorAll('#contentPage .header h1');
+      if (contentHeaderElements.length >= 1) {
+        contentHeaderElements[0].textContent = `📖 เนื้อหาความรู้`;
+      }
+
+      const tabs = document.querySelectorAll('.tab');
+      if (tabs.length >= 4) {
+        tabs[0].textContent = tab1Title;
+        tabs[1].textContent = tab2Title;
+        tabs[2].textContent = tab3Title;
+        tabs[3].textContent = tab4Title;
+      }
+
+      const contentHeaders = document.querySelectorAll('.content-box h3');
+      if (contentHeaders.length >= 4) {
+        contentHeaders[0].textContent = tab1Title;
+        contentHeaders[1].textContent = tab2Title;
+        contentHeaders[2].textContent = tab3Title;
+        contentHeaders[3].textContent = tab4Title;
+      }
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (config) => ({
+          recolorables: [],
+          borderables: [],
+          fontEditable: undefined,
+          fontSizeable: undefined
+        }),
+        mapToEditPanelValues: (config) => new Map([
+          ['teacher_name', config.teacher_name || defaultConfig.teacher_name],
+          ['lesson_title', config.lesson_title || defaultConfig.lesson_title],
+          ['grade_level', config.grade_level || defaultConfig.grade_level],
+          ['subject_name', config.subject_name || defaultConfig.subject_name],
+          ['tab1_title', config.tab1_title || defaultConfig.tab1_title],
+          ['tab2_title', config.tab2_title || defaultConfig.tab2_title],
+          ['tab3_title', config.tab3_title || defaultConfig.tab3_title],
+          ['tab4_title', config.tab4_title || defaultConfig.tab4_title]
+        ])
+      });
+    }
+
+    document.getElementById('loginBtn').addEventListener('click', function() {
+      const studentName = document.getElementById('studentName').value.trim();
+      if (studentName) {
+        localStorage.setItem('studentName', studentName);
+        document.getElementById('studentNameDisplay').textContent = studentName;
+        updateMenuAccess();
+        showPage('menuPage');
+      }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', function() {
+      localStorage.clear();
+      document.getElementById('studentName').value = '';
+      showPage('loginPage');
+    });
+
+    document.getElementById('pretestCard').addEventListener('click', function() {
+      if (!this.classList.contains('disabled')) {
+        showPage('pretestPage');
+        startQuiz('pretest');
+      }
+    });
+
+    document.getElementById('contentCard').addEventListener('click', function() {
+      if (!this.classList.contains('disabled')) {
+        showPage('contentPage');
+      }
+    });
+
+    document.getElementById('posttestCard').addEventListener('click', function() {
+      if (!this.classList.contains('disabled')) {
+        showPage('posttestPage');
+        startQuiz('posttest');
+      }
+    });
+
+    document.getElementById('gameCard').addEventListener('click', function() {
+      if (!this.classList.contains('disabled')) {
+        showPage('gamePage');
+        initGame();
+      }
+    });
+
+    document.getElementById('resultsCard').addEventListener('click', function() {
+      if (!this.classList.contains('disabled')) {
+        showPage('resultsPage');
+        showResults();
+      }
+    });
+
+    document.getElementById('pretestNextBtn').addEventListener('click', function() {
+      nextQuestion();
+    });
+
+    document.getElementById('pretestBackBtn').addEventListener('click', function() {
+      clearInterval(timer);
+      showPage('menuPage');
+    });
+
+    document.getElementById('contentBackBtn').addEventListener('click', function() {
+      showPage('menuPage');
+    });
+
+    document.getElementById('posttestNextBtn').addEventListener('click', function() {
+      nextQuestion();
+    });
+
+    document.getElementById('posttestBackBtn').addEventListener('click', function() {
+      clearInterval(timer);
+      showPage('menuPage');
+    });
+
+    document.getElementById('gameResetBtn').addEventListener('click', function() {
+      initGame();
+    });
+
+    document.getElementById('gameBackBtn').addEventListener('click', function() {
+      showPage('menuPage');
+    });
+
+    document.getElementById('resultsBackBtn').addEventListener('click', function() {
+      showPage('menuPage');
+    });
+
+    initTabs();
+
+    const studentName = localStorage.getItem('studentName');
+    if (studentName) {
+      document.getElementById('studentNameDisplay').textContent = studentName;
+      updateMenuAccess();
+      showPage('menuPage');
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a3e7e0c9017fd02',t:'MTc2NDA0NTg4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
